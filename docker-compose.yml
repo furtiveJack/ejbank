@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 
 services:
 
@@ -23,5 +23,5 @@ services:
         ports:
             - 8001:8181
             - 8002:4848
-
-
+        volumes:
+            - ./deployments:/opt/payara/appserver/glassfish/domains/production/autodeploy
