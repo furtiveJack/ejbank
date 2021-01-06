@@ -2,6 +2,7 @@ package com.ejbank.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "ejbank_account_type")
@@ -20,6 +21,9 @@ public class AccountTypeEntity implements Serializable {
 
     @Column(name = "overdraft")
     private int overdraft;
+
+    @OneToMany(mappedBy = "accountType")
+    private List<AccountEntity> accounts;
 
     public void setId(int id) {
         this.id = id;
@@ -51,5 +55,13 @@ public class AccountTypeEntity implements Serializable {
 
     public void setOverdraft(int overdraft) {
         this.overdraft = overdraft;
+    }
+
+    public List<AccountEntity> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<AccountEntity> accounts) {
+        this.accounts = accounts;
     }
 }

@@ -13,20 +13,20 @@ public class TransactionEntity implements Serializable {
     @Id
     private int id;
 
-    @Column(name = "account_id_from", columnDefinition = "INT")
-    @ManyToOne
-    private User account_id_from;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id_from", columnDefinition = "INT")
+    private UserEntity account_id_from;
 
-    @Column(name = "account_id_to", columnDefinition = "INT")
-    @ManyToOne
-    private User account_id_to;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id_to", columnDefinition = "INT")
+    private UserEntity account_id_to;
 
-    @Column(name = "author", columnDefinition = "id")
-    @ManyToOne
-    private User author;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author", columnDefinition = "id")
+    private UserEntity author;
 
     @Column(name = "amount", columnDefinition = "DECIMAL(10, 0)")
-    private float amount;
+    private double amount;
 
     @Column(name = "comment")
     private String comment;
