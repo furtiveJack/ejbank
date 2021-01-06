@@ -1,7 +1,9 @@
 package com.ejbank.api;
 
 
+import com.ejbank.api.payload.UserPayload;
 import com.ejbank.beans.UserBeanLocal;
+import com.ejbank.model.UserEntity;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -14,21 +16,16 @@ import javax.ws.rs.core.MediaType;
 @Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
-public class UserTest {
+public class UserAPI {
 
     @EJB
     private UserBeanLocal testUserBean;
 
     @GET
-    @Path("/test")
-    public String testEJB() {
-        return testUserBean.test();
-    }
-
-    @GET
     @Path("/{userId}")
-    public String testUserById(@PathParam("userId") String userId) {
-        return testUserBean.test() + userId;
+    public UserPayload getUserById(@PathParam("userId") Integer userId) {
+        UserEntity user = testUserBean.getById(userId);
+        return new UserPayload(user.getFirstname(), user.getLastname());
     }
 
 }

@@ -1,14 +1,21 @@
 package com.ejbank.beans;
 
+import com.ejbank.model.UserEntity;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Stateless
 @LocalBean
 public class UserBean implements UserBeanLocal {
 
+    @PersistenceContext(unitName = "EJBankPU")
+    private EntityManager em;
+
     @Override
-    public String test() {
-        return "Hello from EJB";
+    public UserEntity getById(int id) {
+        return em.find(UserEntity.class, id);
     }
 }
