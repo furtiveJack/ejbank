@@ -1,5 +1,7 @@
 package com.ejbank.api.payload;
 
+import java.util.Objects;
+
 public class AccountPayload {
 
     private String id;
@@ -7,6 +9,9 @@ public class AccountPayload {
     private Double amount;
 
     public AccountPayload(String id, String type, Double amount) {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(type);
+        Objects.requireNonNull(amount);
         this.id = id;
         this.type = type;
         this.amount = amount;

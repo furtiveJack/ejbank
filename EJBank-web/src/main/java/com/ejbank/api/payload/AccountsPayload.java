@@ -2,16 +2,17 @@ package com.ejbank.api.payload;
 
 import java.util.List;
 
-public class AccountsPayload {
+public class AccountsPayload<T> {
 
-    private List<AccountPayload> accounts;
-    private String error = null;
+    private List<T> accounts;
+    private String error;
 
-    public AccountsPayload(List<AccountPayload> accounts) {
+    public AccountsPayload(List<T> accounts, String error) {
         this.accounts = accounts;
+        this.error = error;
     }
 
-    public List<AccountPayload> getAccounts() {
+    public List<T> getAccounts() {
         return accounts;
     }
 
