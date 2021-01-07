@@ -9,4 +9,6 @@ import java.util.List;
 public interface TransactionBeanLocal {
 
     int getTransactionsToValidate(int userId);
+
+    int getNbTransactionsForAccount(int accountId);
 }

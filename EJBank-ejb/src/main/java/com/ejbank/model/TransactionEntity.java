@@ -6,6 +6,12 @@ import java.util.Date;
 
 @Entity
 @Table(name = "ejbank_transaction")
+@NamedQueries({
+        @NamedQuery(name = "TransactionEntity.getNBTransactionsForAccount",
+        query = "SELECT DISTINCT t FROM TransactionEntity AS t " +
+                "WHERE (t.account_id_from.id = :accountId or t.account_id_to.id = :accountId) " +
+                "AND t.applied = false ")
+})
 public class TransactionEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
