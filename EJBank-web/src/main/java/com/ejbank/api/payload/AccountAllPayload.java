@@ -10,4 +10,12 @@ public class AccountAllPayload extends AccountPayload {
         Objects.requireNonNull(user);
         this.user = user;
     }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 }
