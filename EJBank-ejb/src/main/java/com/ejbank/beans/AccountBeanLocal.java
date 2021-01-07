@@ -8,5 +8,9 @@ import java.util.List;
 @Local
 public interface AccountBeanLocal {
 
-    List<AccountEntity> getAccountsByUser(int id);
+    List<AccountEntity> getAccountsByCustomer(int id);
+
+    List<AccountEntity> getAccountsByAdvisor(int id);
+
+
 }

@@ -7,7 +7,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.StringJoiner;
 
 @Stateless
 @LocalBean
@@ -17,9 +16,16 @@ public class AccountBean implements AccountBeanLocal {
     private EntityManager em;
 
     @Override
-    public List<AccountEntity> getAccountsByUser(int userId) {
-        return em.createNamedQuery("AccountEntity.getAccountsByUser", AccountEntity.class)
+    public List<AccountEntity> getAccountsByCustomer(int userId) {
+        return em.createNamedQuery("AccountEntity.getAccountsByCustomer", AccountEntity.class)
                 .setParameter("userId", userId)
+                .getResultList();
+    }
+
+    @Override
+    public List<AccountEntity> getAccountsByAdvisor(int id) {
+        return em.createNamedQuery("AccountEntity.getAccountsByAdvisor", AccountEntity.class)
+                .setParameter("userId", id)
                 .getResultList();
     }
 }
