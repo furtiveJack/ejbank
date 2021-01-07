@@ -5,7 +5,14 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "ejbank_account")
-@NamedQuery(name = "AccountEntity.getAccountsByUser", query = "SELECT a FROM AccountEntity a WHERE a.customer.id = :userId")
+@NamedQueries({
+        @NamedQuery(name = "AccountEntity.getAccountsByCustomer",
+                query = "SELECT a FROM AccountEntity a WHERE a.customer.id = :userId"),
+        @NamedQuery(name = "AccountEntity.getAccountsByAdvisor",
+                query = "SELECT a FROM AccountEntity as a " +
+                        "WHERE a.customer.id IN (" +
+                            "SELECT c.id from CustomerEntity AS c WHERE c.advisor_id = :userId)")
+} )
 public class AccountEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
