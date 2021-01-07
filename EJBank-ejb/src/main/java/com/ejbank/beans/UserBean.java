@@ -18,4 +18,10 @@ public class UserBean implements UserBeanLocal {
     public UserEntity getById(int id) {
         return em.find(UserEntity.class, id);
     }
+
+    @Override
+    public boolean isCustomer(int userId) {
+        UserEntity user = getById(userId);
+        return "customer".equals(user.getType());
+    }
 }

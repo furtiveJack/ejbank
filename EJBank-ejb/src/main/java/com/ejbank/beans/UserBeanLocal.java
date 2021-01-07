@@ -8,4 +8,6 @@ import javax.ejb.Local;
 public interface UserBeanLocal {
 
     UserEntity getById(int id);
+
+    boolean isCustomer(int userId);
 }
