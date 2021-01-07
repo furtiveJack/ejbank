@@ -2,11 +2,11 @@ package com.ejbank.api.payload;
 
 import java.util.Objects;
 
-public class AttachedAccountPayload extends AccountPayload {
+public class AccountAttachedPayload extends AccountPayload {
     private String user;
     private int validation;
 
-    public AttachedAccountPayload(String id, String type, Double amount, String user, int validation) {
+    public AccountAttachedPayload(String id, String type, Double amount, String user, int validation) {
         super(id, type, amount);
         Objects.requireNonNull(user);
         assert(validation >= 0);

@@ -1,9 +1,11 @@
 package com.ejbank.api;
 
+import com.ejbank.api.payload.AccountAllPayload;
 import com.ejbank.api.payload.AccountPayload;
 import com.ejbank.api.payload.AccountsPayload;
-import com.ejbank.api.payload.AttachedAccountPayload;
+import com.ejbank.api.payload.AccountAttachedPayload;
 import com.ejbank.beans.AccountBeanLocal;
+import com.ejbank.beans.TransactionBeanLocal;
 import com.ejbank.beans.UserBeanLocal;
 import com.ejbank.model.AccountEntity;
 import com.ejbank.model.UserEntity;
@@ -28,9 +30,12 @@ public class AccountAPI {
     @EJB
     private UserBeanLocal userBeanLocal;
 
+    @EJB
+    private TransactionBeanLocal transactionBeanLocal;
+
     @GET
     @Path("/{user_id}")
-    public AccountsPayload<AccountPayload> getUserAccounts(@PathParam("user_id") Integer userId) {
+    public AccountsPayload<AccountPayload> getCustomerAccounts(@PathParam("user_id") Integer userId) {
         if (! userBeanLocal.isCustomer(userId)) {
             return new AccountsPayload<>(new ArrayList<>(), "You are not a customer");
         }
@@ -46,20 +51,38 @@ public class AccountAPI {
 
     @GET
     @Path("/attached/{user_id}")
-    public AccountsPayload<AttachedAccountPayload> getAdvisorAttachedAccounts(@PathParam("user_id") Integer userId) {
+    public AccountsPayload<AccountAttachedPayload> getAdvisorAttachedAccounts(@PathParam("user_id") Integer userId) {
         if (userBeanLocal.isCustomer(userId)) {
             return new AccountsPayload<>(new ArrayList<>(), "You are not an advisor");
         }
         List<AccountEntity> accounts = accountBeanLocal.getAccountsByAdvisor(userId);
-        List<AttachedAccountPayload> payloads = new ArrayList<>();
+        List<AccountAttachedPayload> payloads = new ArrayList<>();
         for (AccountEntity account : accounts) {
             UserEntity user = userBeanLocal.getById(account.getCustomer().getId());
-            int validation = 1; // TODO : ajouter "validation" = le nombre de transactions à valider sur chaque compte
-            payloads.add(new AttachedAccountPayload(""+account.getId(),
+            int validation = transactionBeanLocal.getNbTransactionsForAccount(account.getId());
+            payloads.add(new AccountAttachedPayload(""+account.getId(),
                     account.getAccountType().getName(),
                     account.getBalance(),
                     user.getFirstname() + " " + user.getLastname(),
                     validation));
+        }
+        return new AccountsPayload<>(payloads, null);
+    }
+
+    @GET
+    @Path("/all/{user_id}")
+    public AccountsPayload<AccountAllPayload> getUserAccounts(@PathParam("user_id") Integer userId) {
+        List<AccountAllPayload> payloads = new ArrayList<>();
+        List<AccountEntity> accounts = userBeanLocal.isCustomer(userId)
+                ? accountBeanLocal.getAccountsByCustomer(userId)
+                : accountBeanLocal.getAccountsByAdvisor(userId);
+        for (AccountEntity account : accounts) {
+            UserEntity user = userBeanLocal.getById(account.getCustomer().getId());
+            payloads.add(new AccountAllPayload(
+                    account.getId()+"",
+                    account.getAccountType().getName(),
+                    account.getBalance(),
+                    user.getFirstname() + " " + user.getLastname()));
         }
         return new AccountsPayload<>(payloads, null);
     }
