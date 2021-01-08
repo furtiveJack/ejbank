@@ -2,6 +2,8 @@ package com.ejbank.api;
 
 import com.ejbank.api.payload.TransactionListPayload;
 import com.ejbank.api.payload.TransactionPayload;
+import com.ejbank.api.payload.TransactionPreviewPayload;
+import com.ejbank.api.payload.TransactionPreviewRequestPayload;
 import com.ejbank.beans.AccountBeanLocal;
 import com.ejbank.beans.TransactionBeanLocal;
 import com.ejbank.beans.UserBeanLocal;
@@ -11,10 +13,7 @@ import com.ejbank.model.UserEntity;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,5 +72,22 @@ public class TransactionAPI {
         }
         int total = transactionBeanLocal.getNbTransactionsByAccount(accountId);
         return new TransactionListPayload(payloads, null, total);
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/preview")
+    public TransactionPreviewPayload getTransactionPreview(TransactionPreviewRequestPayload payload) {
+        AccountEntity srcAccount = accountBeanLocal.getById(Integer.parseInt(payload.getSource()));
+        AccountEntity dstAccount = accountBeanLocal.getById(Integer.parseInt(payload.getDestination()));
+        int overdraft = srcAccount.getAccountType().getOverdraft();
+        double amount = Integer.parseInt(payload.getAmount());
+        double before = srcAccount.getBalance() - amount;
+        double after = dstAccount.getBalance() + amount;
+        boolean result = before + overdraft >= 0;
+        String message = result ? "" : "Vous ne disposez pas d'un solde suffisant";
+        return new TransactionPreviewPayload(result, before, after,
+                message, null);
     }
 }
