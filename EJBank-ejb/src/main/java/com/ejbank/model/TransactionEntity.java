@@ -10,7 +10,11 @@ import java.util.Date;
         @NamedQuery(name = "TransactionEntity.getNBTransactionsForAccount",
         query = "SELECT DISTINCT t FROM TransactionEntity AS t " +
                 "WHERE (t.account_id_from.id = :accountId or t.account_id_to.id = :accountId) " +
-                "AND t.applied = false ")
+                "AND t.applied = false "),
+        @NamedQuery(name = "TransactionEntity.getByAccount",
+        query = "SELECT t FROM TransactionEntity AS t " +
+                "WHERE (t.account_id_from.id = :accountId or t.account_id_to.id = :accountId) " +
+                "ORDER BY t.date DESC")
 })
 public class TransactionEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -21,11 +25,11 @@ public class TransactionEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id_from", columnDefinition = "INT")
-    private UserEntity account_id_from;
+    private AccountEntity account_id_from;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id_to", columnDefinition = "INT")
-    private UserEntity account_id_to;
+    private AccountEntity account_id_to;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author", columnDefinition = "id")
@@ -41,6 +45,41 @@ public class TransactionEntity implements Serializable {
     private boolean applied;
 
     @Column(name = "date", columnDefinition = "DATETIME")
-    private Date date;
+    private String date;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public AccountEntity getAccount_id_from() {
+        return account_id_from;
+    }
+
+    public AccountEntity getAccount_id_to() {
+        return account_id_to;
+    }
+
+    public UserEntity getAuthor() {
+        return author;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public boolean isApplied() {
+        return applied;
+    }
+
+    public String getDate() {
+        return date;
+    }
 }

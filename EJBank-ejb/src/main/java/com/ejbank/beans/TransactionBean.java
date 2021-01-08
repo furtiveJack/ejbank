@@ -17,20 +17,29 @@ public class TransactionBean implements TransactionBeanLocal {
     private EntityManager em;
 
     @Override
-    public int getTransactionsToValidate(int userId) {
-        UserEntity user = em.find(UserEntity.class, userId);
-        if ("customer".equals(user.getType())) {
-            return 0;
-        }
-        return 3;
-    }
-
-    @Override
-    public int getNbTransactionsForAccount(int accountId) {
+    public int getNbTransactionsToValidateForAccount(int accountId) {
         List<TransactionEntity> transactions = em
                 .createNamedQuery("TransactionEntity.getNBTransactionsForAccount", TransactionEntity.class)
                 .setParameter("accountId", accountId)
                 .getResultList();
         return transactions.size();
+    }
+
+    @Override
+    public List<TransactionEntity> getTransactionsByAccount(int accountId, int offset) {
+        List<TransactionEntity> transactions = em.createNamedQuery("TransactionEntity.getByAccount", TransactionEntity.class)
+                .setParameter("accountId", accountId)
+                .setFirstResult(offset)
+                .setMaxResults(10)
+                .getResultList();
+        return transactions;
+    }
+
+    @Override
+    public int getNbTransactionsByAccount(int accountId) {
+        return em.createNamedQuery("TransactionEntity.getByAccount", TransactionEntity.class)
+                .setParameter("accountId", accountId)
+                .getResultList()
+                .size();
     }
 }

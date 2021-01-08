@@ -1,6 +1,7 @@
 package com.ejbank.beans;
 
 import com.ejbank.model.AccountEntity;
+import com.ejbank.model.TransactionEntity;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -8,7 +9,9 @@ import java.util.List;
 @Local
 public interface TransactionBeanLocal {
 
-    int getTransactionsToValidate(int userId);
+    int getNbTransactionsToValidateForAccount(int accountId);
 
-    int getNbTransactionsForAccount(int accountId);
+    List<TransactionEntity> getTransactionsByAccount(int accountId, int offset);
+
+    int getNbTransactionsByAccount(int accountId);
 }

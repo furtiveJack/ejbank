@@ -7,8 +7,6 @@ Java JEE project
 
 /account/{account_id}/{user_id}
 
-/transaction/list/{account_id}/{offset}/{user_id}
-
 /transaction/preview
 
 /transaction/apply
@@ -28,3 +26,5 @@ Java JEE project
 /accounts/all/{user_id}
 
 /transaction/validation/notification/{user_id}
+
+/transaction/list/{account_id}/{offset}/{user_id}
