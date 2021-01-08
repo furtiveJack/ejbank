@@ -59,7 +59,7 @@ public class AccountAPI {
         List<AccountAttachedPayload> payloads = new ArrayList<>();
         for (AccountEntity account : accounts) {
             UserEntity user = userBeanLocal.getById(account.getCustomer().getId());
-            int validation = transactionBeanLocal.getNbTransactionsForAccount(account.getId());
+            int validation = transactionBeanLocal.getNbTransactionsToValidateForAccount(account.getId());
             payloads.add(new AccountAttachedPayload(""+account.getId(),
                     account.getAccountType().getName(),
                     account.getBalance(),

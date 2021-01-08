@@ -28,4 +28,9 @@ public class AccountBean implements AccountBeanLocal {
                 .setParameter("userId", id)
                 .getResultList();
     }
+
+    @Override
+    public AccountEntity getById(int id) {
+        return em.find(AccountEntity.class, id);
+    }
 }

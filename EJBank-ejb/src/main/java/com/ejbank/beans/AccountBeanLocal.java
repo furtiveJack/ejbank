@@ -12,5 +12,5 @@ public interface AccountBeanLocal {
 
     List<AccountEntity> getAccountsByAdvisor(int id);
 
-
+    AccountEntity getById(int id);
 }
