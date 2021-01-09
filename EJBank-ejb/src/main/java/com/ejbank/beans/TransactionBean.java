@@ -26,7 +26,7 @@ public class TransactionBean implements TransactionBeanLocal {
                 .createNamedQuery("TransactionEntity.getNBTransactionsForAccount", TransactionEntity.class)
                 .setParameter("accountId", accountId)
                 .getResultList();
-        return transactions.size();
+        return transactions != null ? transactions.size() : 0;
     }
 
     @Override
@@ -40,10 +40,10 @@ public class TransactionBean implements TransactionBeanLocal {
 
     @Override
     public int getNbTransactionsByAccount(int accountId) {
-        return em.createNamedQuery("TransactionEntity.getByAccount", TransactionEntity.class)
+        List<TransactionEntity> transactions = em.createNamedQuery("TransactionEntity.getByAccount", TransactionEntity.class)
                 .setParameter("accountId", accountId)
-                .getResultList()
-                .size();
+                .getResultList();
+        return transactions != null ? transactions.size() : 0;
     }
 
     @Override
