@@ -1,7 +1,5 @@
 package com.ejbank.api.payload;
 
-import java.util.Objects;
-
 public class TransactionPayload {
     private int id;
     private String date;

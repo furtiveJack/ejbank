@@ -1,7 +1,6 @@
 package com.ejbank.api.payload;
 
 import java.util.List;
-import java.util.Objects;
 
 public class TransactionListPayload {
     private List<TransactionPayload> transactions;
