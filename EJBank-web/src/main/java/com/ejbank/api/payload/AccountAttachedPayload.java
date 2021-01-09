@@ -18,15 +18,7 @@ public class AccountAttachedPayload extends AccountPayload {
         return user;
     }
 
-    public void setUser(String user) {
-        this.user = user;
-    }
-
     public int getValidation() {
         return validation;
-    }
-
-    public void setValidation(int validation) {
-        this.validation = validation;
     }
 }
