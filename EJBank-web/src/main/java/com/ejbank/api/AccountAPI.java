@@ -40,6 +40,9 @@ public class AccountAPI {
             return new AccountsPayload<>(new ArrayList<>(), "You are not a customer");
         }
         List<AccountEntity> accounts = accountBeanLocal.getAccountsByCustomer(userId);
+        if (accounts == null) {
+            return new AccountsPayload<>(new ArrayList<>(), "You don't have any account");
+        }
         List<AccountPayload> payloads = new ArrayList<>();
         for (AccountEntity account : accounts) {
             payloads.add(new AccountPayload(""+account.getId(),
@@ -56,6 +59,9 @@ public class AccountAPI {
             return new AccountsPayload<>(new ArrayList<>(), "You are not an advisor");
         }
         List<AccountEntity> accounts = accountBeanLocal.getAccountsByAdvisor(userId);
+        if (accounts == null) {
+            return new AccountsPayload<>(new ArrayList<>(), "You don't have any attached account");
+        }
         List<AccountAttachedPayload> payloads = new ArrayList<>();
         for (AccountEntity account : accounts) {
             UserEntity user = userBeanLocal.getById(account.getCustomer().getId());
@@ -76,6 +82,9 @@ public class AccountAPI {
         List<AccountEntity> accounts = userBeanLocal.isCustomer(userId)
                 ? accountBeanLocal.getAccountsByCustomer(userId)
                 : accountBeanLocal.getAccountsByAdvisor(userId);
+        if (accounts == null) {
+            return new AccountsPayload<>(new ArrayList<>(), "No account for this user");
+        }
         for (AccountEntity account : accounts) {
             UserEntity user = userBeanLocal.getById(account.getCustomer().getId());
             payloads.add(new AccountAllPayload(

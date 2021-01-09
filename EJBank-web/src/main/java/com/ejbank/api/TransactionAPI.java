@@ -52,9 +52,12 @@ public class TransactionAPI {
         List<AccountEntity> accounts = isCustomer
                 ? accountBeanLocal.getAccountsByCustomer(userId)
                 : accountBeanLocal.getAccountsByAdvisor(userId);
+        if (accounts == null) {
+            return new TransactionListPayload(new ArrayList<>(), "No account for this user", 0);
+        }
         if (accounts.stream().noneMatch(account -> account.getId() == accountId)) {
             return new TransactionListPayload(new ArrayList<>(),
-                    "You're not allowed to access this account", 0);
+                    "Account access forbidden", 0);
         }
         List<TransactionEntity> transactions = transactionBeanLocal.getTransactionsByAccount(accountId, offset);
         List<TransactionPayload> payloads = new ArrayList<>();
@@ -79,15 +82,25 @@ public class TransactionAPI {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/preview")
     public TransactionPreviewPayload getTransactionPreview(TransactionPreviewRequestPayload payload) {
+        if (payload == null) {
+            return new TransactionPreviewPayload(false, 0, 0, "", "Invalid request");
+        }
         AccountEntity srcAccount = accountBeanLocal.getById(Integer.parseInt(payload.getSource()));
         AccountEntity dstAccount = accountBeanLocal.getById(Integer.parseInt(payload.getDestination()));
+        if (srcAccount == null) {
+            return new TransactionPreviewPayload(false, 0, 0, "",
+                    "Source account not found");
+        }
+        if (dstAccount == null) {
+            return new TransactionPreviewPayload(false, 0, 0, "",
+                    "Destination account not found");
+        }
         int overdraft = srcAccount.getAccountType().getOverdraft();
         double amount = Integer.parseInt(payload.getAmount());
         double before = srcAccount.getBalance() - amount;
         double after = dstAccount.getBalance() + amount;
         boolean result = before + overdraft >= 0;
         String message = result ? "" : "Vous ne disposez pas d'un solde suffisant";
-        return new TransactionPreviewPayload(result, before, after,
-                message, null);
+        return new TransactionPreviewPayload(result, before, after, message, null);
     }
 }
