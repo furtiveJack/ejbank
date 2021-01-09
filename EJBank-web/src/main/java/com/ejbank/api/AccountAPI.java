@@ -1,9 +1,6 @@
 package com.ejbank.api;
 
-import com.ejbank.api.payload.AccountAllPayload;
-import com.ejbank.api.payload.AccountPayload;
-import com.ejbank.api.payload.AccountsPayload;
-import com.ejbank.api.payload.AccountAttachedPayload;
+import com.ejbank.api.payload.*;
 import com.ejbank.beans.AccountBeanLocal;
 import com.ejbank.beans.TransactionBeanLocal;
 import com.ejbank.beans.UserBeanLocal;
