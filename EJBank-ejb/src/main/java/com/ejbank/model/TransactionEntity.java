@@ -82,4 +82,32 @@ public class TransactionEntity implements Serializable {
     public String getDate() {
         return date;
     }
+
+    public void setAccount_id_from(AccountEntity account_id_from) {
+        this.account_id_from = account_id_from;
+    }
+
+    public void setAccount_id_to(AccountEntity account_id_to) {
+        this.account_id_to = account_id_to;
+    }
+
+    public void setAuthor(UserEntity author) {
+        this.author = author;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setApplied(boolean applied) {
+        this.applied = applied;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }
