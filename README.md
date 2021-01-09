@@ -7,11 +7,9 @@ Java JEE project
 
 /account/{account_id}/{user_id}
 
-/transaction/apply
-
-/transaction/validation
-
 ## Done
+
+_Note : still need to check for errors in those._ 
 
 /server/status
 
@@ -28,3 +26,7 @@ Java JEE project
 /transaction/list/{account_id}/{offset}/{user_id}
 
 /transaction/preview
+
+/transaction/apply
+
+/transaction/validation
