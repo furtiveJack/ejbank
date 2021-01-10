@@ -4,7 +4,7 @@ Java EJB project
 
 # Authors
 
-Rémi Marszal
+Rémi MARSZAL
 
 Tanguy TRAINA
 
