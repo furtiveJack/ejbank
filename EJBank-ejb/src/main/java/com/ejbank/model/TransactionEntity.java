@@ -14,6 +14,11 @@ import java.util.Date;
         @NamedQuery(name = "TransactionEntity.getByAccount",
         query = "SELECT t FROM TransactionEntity AS t " +
                 "WHERE (t.account_id_from.id = :accountId or t.account_id_to.id = :accountId) " +
+                "ORDER BY t.date DESC"),
+        @NamedQuery(name = "TransactionEntity.getByMonth",
+        query = "SELECT t FROM TransactionEntity t " +
+                "WHERE (t.account_id_from.id = :accountId or t.account_id_to.id = :accountId) " +
+                "AND t.date >= :startDate AND t.date <= :endDate " +
                 "ORDER BY t.date DESC")
 })
 public class TransactionEntity implements Serializable {

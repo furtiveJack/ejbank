@@ -17,7 +17,7 @@ public class AccountTypeEntity implements Serializable {
     private String name;
 
     @Column(name = "rate")
-    private float rate;
+    private double rate;
 
     @Column(name = "overdraft")
     private int overdraft;
@@ -41,11 +41,11 @@ public class AccountTypeEntity implements Serializable {
         this.name = name;
     }
 
-    public float getRate() {
+    public double getRate() {
         return rate;
     }
 
-    public void setRate(float rate) {
+    public void setRate(double rate) {
         this.rate = rate;
     }
 

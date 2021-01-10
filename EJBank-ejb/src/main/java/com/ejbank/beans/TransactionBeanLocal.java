@@ -60,4 +60,6 @@ public interface TransactionBeanLocal {
      * @return      correponding transaction (can be null)
      */
     TransactionEntity getById(int id);
+
+    List<TransactionEntity> getTransactionsByMonth(int accountId, int year, int month);
 }

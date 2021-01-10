@@ -3,12 +3,12 @@ package com.ejbank.api.payload;
 public class AccountDetailsPayload {
     private String owner;
     private String advisor;
-    private int rate;
-    private double interest;
-    private double amount;
+    private Double rate;
+    private Double interest;
+    private Double amount;
     private String error;
 
-    public AccountDetailsPayload(String owner, String advisor, int rate, double interest, double amount, String error) {
+    public AccountDetailsPayload(String owner, String advisor, Double rate, Double interest, Double amount, String error) {
         this.owner = owner;
         this.advisor = advisor;
         this.rate = rate;
@@ -25,11 +25,11 @@ public class AccountDetailsPayload {
         return advisor;
     }
 
-    public int getRate() {
+    public Double getRate() {
         return rate;
     }
 
-    public double getInterest() {
+    public Double getInterest() {
         return interest;
     }
 
@@ -37,7 +37,7 @@ public class AccountDetailsPayload {
         return error;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 }

@@ -89,4 +89,15 @@ public class TransactionBean implements TransactionBeanLocal {
     public TransactionEntity getById(int id) {
         return em.find(TransactionEntity.class, id);
     }
+
+    @Override
+    public List<TransactionEntity> getTransactionsByMonth(int accountId, int year, int month) {
+        String startDate = year + '-' + month + "-01";
+        String endDate = year + '-' + month + "-31";
+        return em.createNamedQuery("TransactionEntity.getByMonth", TransactionEntity.class)
+                .setParameter("accountId", accountId)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
+    }
 }

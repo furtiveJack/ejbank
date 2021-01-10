@@ -2,7 +2,6 @@ package com.ejbank.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "ejbank_user")
