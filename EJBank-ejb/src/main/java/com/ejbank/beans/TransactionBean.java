@@ -59,7 +59,8 @@ public class TransactionBean implements TransactionBeanLocal {
             transaction.setComment(comment);
             transaction.setAuthor(author);
             transaction.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            em.persist(transaction);            // TODO: Deal with rollbacks
+            em.persist(transaction);
+            em.flush();
             return transaction.getId();
         } catch(Exception e) {
             return -1;
@@ -75,10 +76,10 @@ public class TransactionBean implements TransactionBeanLocal {
             srcAccount.setBalance(srcAccount.getBalance() - transaction.getAmount());
             dstAccount.setBalance(dstAccount.getBalance() + transaction.getAmount());
             transaction.setApplied(true);
-            // TODO: Deal with rollbacks
             em.persist(srcAccount);
             em.persist(dstAccount);
             em.persist(transaction);
+            em.flush();
             return true;
         } catch (Exception e) {
             return false;
@@ -105,7 +106,8 @@ public class TransactionBean implements TransactionBeanLocal {
     public boolean removeTransaction(int id) {
         try {
             TransactionEntity t = getById(id);
-            em.refresh(t);
+            em.remove(t);
+            em.flush();
             return true;
         } catch(Exception e) {
             return false;

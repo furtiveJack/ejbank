@@ -9,7 +9,7 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "TransactionEntity.getNBTransactionsForAccount",
         query = "SELECT DISTINCT t FROM TransactionEntity AS t " +
-                "WHERE (t.account_id_from.id = :accountId or t.account_id_to.id = :accountId) " +
+                "WHERE (t.account_id_from.id = :accountId) " +
                 "AND t.applied = false "),
         @NamedQuery(name = "TransactionEntity.getByAccount",
         query = "SELECT t FROM TransactionEntity AS t " +
