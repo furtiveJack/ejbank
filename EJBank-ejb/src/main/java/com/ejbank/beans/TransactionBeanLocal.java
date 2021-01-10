@@ -62,4 +62,6 @@ public interface TransactionBeanLocal {
     TransactionEntity getById(int id);
 
     List<TransactionEntity> getTransactionsByMonth(int accountId, int year, int month);
+
+    boolean removeTransaction(int id);
 }

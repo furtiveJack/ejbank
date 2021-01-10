@@ -145,11 +145,17 @@ public class TransactionAPI {
                     transaction.getAccount_id_to().getId()+"",
                     transaction.getAmount()+"",
                     transaction.getAuthor().getId()+""));
+            boolean isApproved = payload.isApprove();
+            if (! isApproved) {
+                boolean result = transactionBeanLocal.removeTransaction(transaction.getId());
+                String message = result ? "Transaction removed" : null;
+                String error = ! result ? "Internal error" : null;
+                return new TransactionValidationPayload(result, message, error);
+            }
             if (! preview.isResult()) {
                 return new TransactionValidationPayload( preview.isResult(), preview.getMessage(), preview.getError());
             }
-            boolean isApproved = payload.isApprove();
-            String message = isApproved ? "Transaction applied" : "Transaction removed";
+            String message = "Transaction applied";
             return transactionBeanLocal.applyTransaction(transaction.getId())
                     ? new TransactionValidationPayload(isApproved, message, null)
                     : new TransactionValidationPayload(false, null, "Internal error");

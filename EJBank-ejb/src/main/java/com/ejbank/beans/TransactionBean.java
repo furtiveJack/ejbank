@@ -100,4 +100,15 @@ public class TransactionBean implements TransactionBeanLocal {
                 .setParameter("endDate", endDate)
                 .getResultList();
     }
+
+    @Override
+    public boolean removeTransaction(int id) {
+        try {
+            TransactionEntity t = getById(id);
+            em.refresh(t);
+            return true;
+        } catch(Exception e) {
+            return false;
+        }
+    }
 }
